@@ -1,0 +1,22 @@
+apply plugin: 'findbugs'
+
+task findBugs(type: FindBugs) {
+    group = 'Reporting'
+    description = 'Generate Findbugs reports.'
+
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low"
+    classes = files("$project.buildDir/intermediates/classes")
+    // Use this only if you want exclude some errors
+    excludeFilter = file("$rootProject.rootDir/config/findbugs/exclude.xml")
+
+    source = fileTree('src/main/java/')
+    classpath = files()
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml.destination "${project.buildDir}/reports/findbugs/findbugs-output.xml"
+        html.destination "${project.buildDir}/reports/findbugs/findbugs-output.html"
+    }
+}

@@ -1,0 +1,18 @@
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures = true
+    group = 'Reporting'
+    description = 'Generate checkstyle reports.'
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    source = fileTree('src/main/java/')
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+    reports {
+        include ( '**/*.java')
+        xml {
+            destination "${project.buildDir}/reports/checkstyle/checkstyle-result.xml"
+        }
+    }
+}
