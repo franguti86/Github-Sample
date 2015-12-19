@@ -6,4 +6,6 @@
   <string name="repository_detail_share_text">Have a look at this repository on Github</string>
   <string name="repository_detail_issues_error">Error retrieving issues</string>
   <string name="repository_detail_contributors_error">Error retrieving contributors</string>
+  <string name="repository_detail_contributors_title">Contributors</string>
+  <string name="repository_detail_issues_title">Issues</string>
 </resources>

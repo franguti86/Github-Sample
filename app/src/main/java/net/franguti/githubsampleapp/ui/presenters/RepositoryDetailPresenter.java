@@ -15,6 +15,8 @@ public class RepositoryDetailPresenter implements ContributorsInteractor.Callbac
   private final Navigator navigator;
   private RepositoryDetailView view;
   private Repository repository;
+  private User[] contributors;
+  private Issue[] issues;
 
   @Inject public RepositoryDetailPresenter(ContributorsInteractor contributorsInteractor,
       IssuesInteractor issuesInteractor, Navigator navigator) {
@@ -30,10 +32,14 @@ public class RepositoryDetailPresenter implements ContributorsInteractor.Callbac
   public void start(Repository repository) {
     this.repository = repository;
     view.showRepositoryDetailInfo(repository);
-    view.showContributorsProgressbar();
-    view.showIssuesProgressbar();
-    contributorsInteractor.retrieveThreeTopContributorsByRepository(repository, this);
-    issuesInteractor.retrieveThreeNewestIssuesByRepository(repository, this);
+    if (contributors == null) {
+      view.showContributorsProgressbar();
+      contributorsInteractor.retrieveThreeTopContributorsByRepository(repository, this);
+    }
+    if (issues == null) {
+      view.showIssuesProgressbar();
+      issuesInteractor.retrieveThreeNewestIssuesByRepository(repository, this);
+    }
   }
 
   public void performShareRepository(String shareText) {
@@ -42,6 +48,7 @@ public class RepositoryDetailPresenter implements ContributorsInteractor.Callbac
   }
 
   @Override public void onRetrieveIssuesSuccess(Issue[] issues) {
+    this.issues = issues;
     view.hideIssuesProgressbar();
     view.showIssues(issues);
   }
@@ -52,6 +59,7 @@ public class RepositoryDetailPresenter implements ContributorsInteractor.Callbac
   }
 
   @Override public void onRetrieveContributorsSuccess(User[] contributors) {
+    this.contributors = contributors;
     view.hideContributorsProgressbar();
     view.showContributors(contributors);
   }
