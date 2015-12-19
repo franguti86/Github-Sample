@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import javax.inject.Inject;
 import net.franguti.githubsampleapp.R;
 import net.franguti.githubsampleapp.entities.Repository;
+import net.franguti.githubsampleapp.utils.FontManager;
 
 public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<RepositoryRecyclerViewAdapter.RepositoryViewHolder>
     implements View.OnClickListener {
@@ -19,15 +20,18 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
   }
 
   private final LayoutInflater layoutInflater;
+  private final FontManager fontManager;
   private Repository[] repositories = new Repository[0];
   private RepositoryRecyclerViewAdapterListener listener;
 
-  @Inject public RepositoryRecyclerViewAdapter(LayoutInflater layoutInflater) {
+  @Inject public RepositoryRecyclerViewAdapter(LayoutInflater layoutInflater, FontManager fontManager) {
     this.layoutInflater = layoutInflater;
+    this.fontManager = fontManager;
   }
 
   @Override public RepositoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = layoutInflater.inflate(R.layout.list_item_repository, parent, false);
+    fontManager.setFont(view);
     RepositoryViewHolder holder = new RepositoryViewHolder(view);
     view.setOnClickListener(this);
     return holder;

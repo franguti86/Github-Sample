@@ -100,6 +100,7 @@ dependencies {
   compile 'com.squareup.okhttp:okhttp:2.3.0'
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile "org.parceler:parceler-api:1.0.4"
+  compile 'com.squareup.picasso:picasso:2.5.2'
   apt "org.parceler:parceler:1.0.4"
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:2.0.31-beta'

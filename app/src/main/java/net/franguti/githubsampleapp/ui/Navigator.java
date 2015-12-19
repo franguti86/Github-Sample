@@ -30,4 +30,11 @@ public class Navigator {
     RepositoryDetailActivity.start(activityContext, repository);
   }
 
+  public void shareContent(String content) {
+    Intent sendIntent = new Intent();
+    sendIntent.setAction(Intent.ACTION_SEND);
+    sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+    sendIntent.setType("text/plain");
+    activityContext.startActivity(sendIntent);
+  }
 }

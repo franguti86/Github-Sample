@@ -10,15 +10,17 @@ public class Repository {
   @SerializedName("name") String name;
   @SerializedName("full_name") String fullName;
   @SerializedName("description") String description;
+  @SerializedName("html_url") String htmlUrl;
   @SerializedName("owner") User owner;
 
   public Repository() { }
 
-  public Repository(long id, String name, String fullName, String description, User owner) {
+  public Repository(long id, String name, String fullName, String description, String htmlUrl, User owner) {
     this.id = id;
     this.name = name;
     this.fullName = fullName;
     this.description = description;
+    this.htmlUrl = htmlUrl;
     this.owner = owner;
   }
 
@@ -52,6 +54,14 @@ public class Repository {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getHtmlUrl() {
+    return htmlUrl;
+  }
+
+  public void setHtmlUrl(String htmlUrl) {
+    this.htmlUrl = htmlUrl;
   }
 
   public User getOwner() {
