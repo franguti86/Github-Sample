@@ -24,7 +24,8 @@ import net.franguti.githubsampleapp.ui.views.ProgressBarView;
 import net.franguti.githubsampleapp.utils.FontManager;
 import net.franguti.githubsampleapp.utils.Utils;
 
-public class RepositoryListFragment extends BaseFragment implements RepositoryListView {
+public class RepositoryListFragment extends BaseFragment implements RepositoryListView,
+    RepositoryRecyclerViewAdapter.RepositoryRecyclerViewAdapterListener {
 
   @Inject RepositoryListPresenter presenter;
   @Inject RepositoryRecyclerViewAdapter repositoryRecyclerViewAdapter;
@@ -55,7 +56,7 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
 
   private void initialiseToolbar() {
     ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.repository_list_toolbar_title);
+    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.repository_list_search_hint));
   }
 
   private void initialiseFont() {
@@ -68,13 +69,16 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
         new LinearLayoutManager(getActivity().getApplicationContext());
     repositoryRecyclerView.setLayoutManager(layoutManager);
     repositoryRecyclerView.setAdapter(repositoryRecyclerViewAdapter);
+    repositoryRecyclerViewAdapter.setListener(this);
   }
 
   private void initialiseSearchLanguageEdittext() {
     searchLanguageEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-          presenter.performSearchRepository(v.getText().toString());
+          String language = v.getText().toString();
+          ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(language);
+          presenter.performSearchRepository(language);
           return true;
         }
         return false;
@@ -121,5 +125,9 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
 
   @Override public boolean isSearchLanguageFieldDisplayed() {
     return searchLanguageEdittext.getVisibility() == View.VISIBLE;
+  }
+
+  @Override public void onRepositorySelected(Repository repository) {
+    presenter.performShowRepositoryDetail(repository);
   }
 }

@@ -11,10 +11,16 @@ import javax.inject.Inject;
 import net.franguti.githubsampleapp.R;
 import net.franguti.githubsampleapp.entities.Repository;
 
-public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<RepositoryRecyclerViewAdapter.RepositoryViewHolder> {
+public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<RepositoryRecyclerViewAdapter.RepositoryViewHolder>
+    implements View.OnClickListener {
+
+  public interface RepositoryRecyclerViewAdapterListener {
+    void onRepositorySelected(Repository repository);
+  }
 
   private final LayoutInflater layoutInflater;
   private Repository[] repositories = new Repository[0];
+  private RepositoryRecyclerViewAdapterListener listener;
 
   @Inject public RepositoryRecyclerViewAdapter(LayoutInflater layoutInflater) {
     this.layoutInflater = layoutInflater;
@@ -23,6 +29,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
   @Override public RepositoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = layoutInflater.inflate(R.layout.list_item_repository, parent, false);
     RepositoryViewHolder holder = new RepositoryViewHolder(view);
+    view.setOnClickListener(this);
     return holder;
   }
 
@@ -39,8 +46,18 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
     notifyDataSetChanged();
   }
 
+  public void setListener(RepositoryRecyclerViewAdapterListener listener) {
+    this.listener = listener;
+  }
+
+  @Override public void onClick(View v) {
+    Repository repository = (Repository) v.getTag();
+    if (listener != null) listener.onRepositorySelected(repository);
+  }
+
   static class RepositoryViewHolder extends RecyclerView.ViewHolder {
 
+    @Bind(R.id.item_container) View container;
     @Bind(R.id.repository_name_textview) TextView repositoryNameTextView;
 
     public RepositoryViewHolder(View itemView) {
@@ -50,6 +67,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
 
     public void bindData(Repository repository) {
       repositoryNameTextView.setText(repository.getName());
+      container.setTag(repository);
     }
 
   }

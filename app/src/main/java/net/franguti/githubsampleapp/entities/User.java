@@ -1,13 +1,15 @@
 package net.franguti.githubsampleapp.entities;
 
 import com.google.gson.annotations.SerializedName;
+import org.parceler.Parcel;
 
+@Parcel
 public class User {
 
-  @SerializedName("login") private String login;
-  @SerializedName("id") private long id;
-  @SerializedName("avatar_url") private String avatarUrl;
-  @SerializedName("contributions") private int contributions;
+  @SerializedName("login") String login;
+  @SerializedName("id") long id;
+  @SerializedName("avatar_url") String avatarUrl;
+  @SerializedName("contributions") int contributions;
 
   public User() { }
 
