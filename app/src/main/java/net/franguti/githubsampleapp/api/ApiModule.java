@@ -48,4 +48,8 @@ import retrofit.client.OkClient;
         .build();
   }
 
+  @Provides @Singleton GithubAPI provideGithubRestAPI(RestAdapter restAdapter) {
+    return restAdapter.create(GithubAPI.class);
+  }
+
 }
