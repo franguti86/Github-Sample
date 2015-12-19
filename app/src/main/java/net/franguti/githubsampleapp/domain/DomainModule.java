@@ -3,6 +3,10 @@ package net.franguti.githubsampleapp.domain;
 import dagger.Module;
 import dagger.Provides;
 import net.franguti.githubsampleapp.api.ApiModule;
+import net.franguti.githubsampleapp.domain.interactors.ContributorsInteractor;
+import net.franguti.githubsampleapp.domain.interactors.ContributorsInteractorImpl;
+import net.franguti.githubsampleapp.domain.interactors.IssuesInteractor;
+import net.franguti.githubsampleapp.domain.interactors.IssuesInteractorImpl;
 import net.franguti.githubsampleapp.domain.interactors.SearchRepositoriesInteractor;
 import net.franguti.githubsampleapp.domain.interactors.SearchRepositoriesInteractorImpl;
 
@@ -12,13 +16,19 @@ import net.franguti.githubsampleapp.domain.interactors.SearchRepositoriesInterac
 @Module(
     includes = ApiModule.class,
     library = true,
-    complete = false
-)
-public class DomainModule {
+    complete = false) public class DomainModule {
 
   @Provides SearchRepositoriesInteractor provideSearchRepositoriesInteractor(
       SearchRepositoriesInteractorImpl searchRepositoriesInteractor) {
     return searchRepositoriesInteractor;
   }
 
+  @Provides ContributorsInteractor provideContributorsInteractor(
+      ContributorsInteractorImpl contributorsInteractor) {
+    return contributorsInteractor;
+  }
+
+  @Provides IssuesInteractor provideIssuesInteractor(IssuesInteractorImpl issuesInteractor) {
+    return issuesInteractor;
+  }
 }
