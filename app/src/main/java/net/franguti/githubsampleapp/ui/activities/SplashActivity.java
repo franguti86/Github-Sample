@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
   }
 
   private void startMainActivity() {
-    Intent intent = new Intent(this, ScrollingActivity.class);
+    Intent intent = new Intent(this, RepositoryListActivity.class);
     startActivity(intent);
     finish();
   }
