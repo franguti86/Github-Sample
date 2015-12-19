@@ -44,6 +44,6 @@ public interface GithubAPI {
       @Path("owner") String owner, @Path("repo") String repository, Callback<User[]> callback);
 
   @GET("/repos/{owner}/{repo}/issues") void retrieveIssuesForARepository(
-      @Path("owner") String owner, @Path("repo") String repository, @Query("sort") @SortIssue String sort,
+      @Path("owner") String owner, @Path("repo") String repository, @Query("sort") @SortIssue  String sort,
       Callback<Issue[]> callback);
 }
