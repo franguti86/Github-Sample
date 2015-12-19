@@ -2,6 +2,7 @@ package net.franguti.githubsampleapp.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
    * avoid duplicate all the inflate code in every fragment. You only have to return the layout to
    * inflate in this method when extends BaseFragment.
    */
+  @LayoutRes
   protected abstract int getFragmentLayout();
 
   /**

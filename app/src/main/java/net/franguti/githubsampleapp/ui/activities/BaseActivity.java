@@ -1,6 +1,7 @@
 package net.franguti.githubsampleapp.ui.activities;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
@@ -21,8 +22,12 @@ public abstract class BaseActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     injectDependencies();
+    setContentView(getActivityLayout());
     injectViews();
   }
+
+  @LayoutRes
+  protected abstract int getActivityLayout();
 
   /**
    * Method used to resolve dependencies provided by Dagger modules. Inject an object to provide

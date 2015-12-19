@@ -1,26 +1,28 @@
 package net.franguti.githubsampleapp.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
 import net.franguti.githubsampleapp.R;
+import net.franguti.githubsampleapp.ui.Navigator;
+import net.franguti.githubsampleapp.ui.UIModule;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
   private static final long TIMEOUT_SPLASH = 3 * 1000;
+
+  @Inject Navigator navigator;
 
   @Bind(R.id.logo_view) ImageView logoView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_splash);
-    ButterKnife.bind(this);
 
     startProgressBarAnimation();
     new Handler().postDelayed(new Runnable() {
@@ -30,14 +32,23 @@ public class SplashActivity extends AppCompatActivity {
     }, TIMEOUT_SPLASH);
   }
 
+  @Override protected int getActivityLayout() {
+    return R.layout.activity_splash;
+  }
+
+  @Override protected List<Object> getModules() {
+    List<Object> modules = new ArrayList<>();
+    modules.add(new UIModule());
+    return modules;
+  }
+
   private void startProgressBarAnimation() {
     Animation logoAnimation = AnimationUtils.loadAnimation(this, R.anim.logo_splash_scaling);
     logoView.startAnimation(logoAnimation);
   }
 
   private void startMainActivity() {
-    Intent intent = new Intent(this, ScrollingActivity.class);
-    startActivity(intent);
+    navigator.openRepositoryList();
     finish();
   }
 

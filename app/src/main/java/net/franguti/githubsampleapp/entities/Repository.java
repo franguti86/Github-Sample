@@ -1,13 +1,15 @@
 package net.franguti.githubsampleapp.entities;
 
 import com.google.gson.annotations.SerializedName;
+import org.parceler.Parcel;
 
+@Parcel
 public class Repository {
 
-  @SerializedName("id") private long id;
-  @SerializedName("name") private String name;
-  @SerializedName("full_name") private String fullName;
-  @SerializedName("description") private String description;
+  @SerializedName("id") long id;
+  @SerializedName("name") String name;
+  @SerializedName("full_name") String fullName;
+  @SerializedName("description") String description;
   @SerializedName("owner") User owner;
 
   public Repository() { }
