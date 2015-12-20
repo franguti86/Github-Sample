@@ -11,6 +11,7 @@ public class RepositoryListPresenter implements SearchRepositoriesInteractor.Cal
   private final SearchRepositoriesInteractor searchRepositoriesInteractor;
   private final Navigator navigator;
   private RepositoryListView view;
+  private Repository[] repositories;
 
   @Inject public RepositoryListPresenter(SearchRepositoriesInteractor searchRepositoriesInteractor, Navigator navigator) {
     this.searchRepositoriesInteractor = searchRepositoriesInteractor;
@@ -23,6 +24,7 @@ public class RepositoryListPresenter implements SearchRepositoriesInteractor.Cal
 
   public void start() {
     view.hideSearchLanguageField();
+    if (repositories == null) view.showSearchTutorial();
   }
 
   public void performShowSearchField() {
@@ -35,12 +37,14 @@ public class RepositoryListPresenter implements SearchRepositoriesInteractor.Cal
 
   public void performSearchRepository(String language) {
     view.hideSearchLanguageField();
+    view.hideSearchTutorial();
     view.showRepositories(new Repository[0]);
     view.showProgressBar();
     searchRepositoriesInteractor.searchPopularRepositoriesByLanguage(language, this);
   }
 
   @Override public void onSearchRepositoriesSuccess(SearchResult searchResult) {
+    this.repositories = searchResult.getRepositories();
     view.hideProgressBar();
     view.showRepositories(searchResult.getRepositories());
   }
@@ -48,6 +52,7 @@ public class RepositoryListPresenter implements SearchRepositoriesInteractor.Cal
   @Override public void onSearchRepositoriesError() {
     view.hideProgressBar();
     view.showSearchError();
+    view.showSearchTutorial();
   }
 
   public void performShowRepositoryDetail(Repository repository) {

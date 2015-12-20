@@ -49,6 +49,25 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+      <TextView
+          android:id="@+id/tutorial_search_textview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/repository_list_star_search"
+          android:textSize="20sp"
+          android:gravity="center"
+          android:textColor="@android:color/black"
+          android:layout_centerInParent="true"/>
+
+      <ImageView
+          android:id="@+id/tutorial_imageview"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/logo_github"
+          android:layout_centerHorizontal="true"
+          android:layout_above="@id/tutorial_search_textview"
+          android:layout_marginBottom="10dp"/>
+
       <android.support.v7.widget.RecyclerView
           android:id="@+id/repository_recyclerview"
           android:layout_width="match_parent"

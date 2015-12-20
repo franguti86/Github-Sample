@@ -2,10 +2,12 @@
   <string name="repository_list_search_hint">Search language</string>
   <string name="repository_list_error_search">Error searching repositories</string>
   <string name="repository_list_toolbar_title">Repositories</string>
-  <string name="title_activity_repository_detail">RepositoryDetailActivity</string>
+  <string name="repository_list_toolbar_language_title">Repositories for %1$s</string>
+  <string name="repository_list_toolbar_language_error_title">Error for %1$s</string>
   <string name="repository_detail_share_text">Have a look at this repository on Github</string>
   <string name="repository_detail_issues_error">Error retrieving issues</string>
   <string name="repository_detail_contributors_error">Error retrieving contributors</string>
   <string name="repository_detail_contributors_title">Contributors</string>
   <string name="repository_detail_issues_title">Issues</string>
+  <string name="repository_list_star_search">Try to search a language</string>
 </resources>

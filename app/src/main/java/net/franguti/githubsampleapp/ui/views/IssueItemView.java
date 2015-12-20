@@ -17,6 +17,7 @@ public class IssueItemView extends CardView {
   @Bind(R.id.owner_name_textview) TextView ownerNameTextView;
   @Bind(R.id.issue_title_textview) TextView issueTitleTextView;
   @Bind(R.id.issue_description_textview) TextView issueDescriptionTextView;
+  @Bind(R.id.state_textview) TextView stateTextView;
 
   public IssueItemView(Context context) {
     super(context);
@@ -42,5 +43,6 @@ public class IssueItemView extends CardView {
     ownerNameTextView.setText(issue.getUser().getLogin());
     issueTitleTextView.setText(issue.getTitle());
     issueDescriptionTextView.setText(issue.getBody());
+    stateTextView.setText(issue.getState());
   }
 }
