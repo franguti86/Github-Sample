@@ -41,7 +41,8 @@ import retrofit.client.OkClient;
     return new OkClient(okHttpClient);
   }
 
-  @Provides RestAdapter provideRestAdapter(Client client, @Named("github_endpoint") String endpoint) {
+  @Provides RestAdapter provideRestAdapter(Client client,
+      @Named("github_endpoint") String endpoint) {
     return new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
         .setClient(client)
         .setEndpoint(endpoint)

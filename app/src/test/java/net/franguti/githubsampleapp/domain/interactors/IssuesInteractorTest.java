@@ -17,6 +17,10 @@ import org.junit.Test;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.calls;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class IssuesInteractorTest {
 
@@ -40,7 +44,7 @@ public class IssuesInteractorTest {
     assertThat("Assertion error reading file!", searchJson != null && searchJson.length() > 0);
   }
 
-  @Test(timeout = 100) public void givenARightJson_WhenRetrieveIssues_ThenShouldReturnIssues() throws IOException {
+  @Test public void givenARightJson_WhenRetrieveIssues_ThenShouldReturnIssues() throws IOException {
     File file = FileUtils.getFileFromPath(this, "./issues.json");
     String searchJson = FileUtils.readFileAsString(file);
     mockWebServer.enqueue(new MockResponse().setBody(searchJson));
@@ -50,20 +54,30 @@ public class IssuesInteractorTest {
     Repository repository = new Repository();
     repository.setName("test");
     repository.setOwner(owner);
-    final AtomicBoolean testDone = new AtomicBoolean(false);
     issuesInteractor.retrieveThreeNewestIssuesByRepository(repository,
         new IssuesInteractor.Callback() {
           @Override public void onRetrieveIssuesSuccess(Issue[] issues) {
-            assertThat("Assertion fail, no issues result!",
-                issues.length > 0);
-            testDone.set(true);
+            assertThat("Assertion fail, no issues result!", issues.length > 0);
           }
 
           @Override public void onRetrieveIssuesError() {
             fail("Fail retrieving contributors!");
           }
         });
-    while(!testDone.get());
+  }
+
+  @Test public void givenAWrongJson_WhenRetrieveIssues_ThenShouldCallError() throws IOException {
+    mockWebServer.enqueue(new MockResponse().setBody("[,"));
+
+    User owner = new User();
+    owner.setLogin("owner");
+    Repository repository = new Repository();
+    repository.setName("test");
+    repository.setOwner(owner);
+    IssuesInteractor.Callback mockCallback = mock(IssuesInteractor.Callback.class);
+    issuesInteractor.retrieveThreeNewestIssuesByRepository(repository, mockCallback);
+    verify(mockCallback).onRetrieveIssuesError();
+    verifyNoMoreInteractions(mockCallback);
   }
 
 }
