@@ -2,6 +2,7 @@ package net.franguti.githubsampleapp.ui;
 
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 import net.franguti.githubsampleapp.domain.DomainModule;
 import net.franguti.githubsampleapp.domain.interactors.ContributorsInteractor;
 import net.franguti.githubsampleapp.domain.interactors.ContributorsInteractorImpl;
@@ -29,17 +30,22 @@ import static org.mockito.Mockito.mock;
 )
 public class TestUIModule {
 
-  @Provides SearchRepositoriesInteractor provideSearchRepositoriesInteractor(
+  @Provides @Singleton SearchRepositoriesInteractor provideSearchRepositoriesInteractor(
       SearchRepositoriesInteractorImpl searchRepositoriesInteractor) {
     return mock(SearchRepositoriesInteractor.class);
   }
 
-  @Provides ContributorsInteractor provideContributorsInteractor(
+  @Provides @Singleton ContributorsInteractor provideContributorsInteractor(
       ContributorsInteractorImpl contributorsInteractor) {
     return mock(ContributorsInteractor.class);
   }
 
-  @Provides IssuesInteractor provideIssuesInteractor(IssuesInteractorImpl issuesInteractor) {
+  @Provides @Singleton IssuesInteractor provideIssuesInteractor(IssuesInteractorImpl issuesInteractor) {
     return mock(IssuesInteractor.class);
   }
+
+  @Provides @Singleton Navigator provideNavigator() {
+    return mock(Navigator.class);
+  }
+
 }
