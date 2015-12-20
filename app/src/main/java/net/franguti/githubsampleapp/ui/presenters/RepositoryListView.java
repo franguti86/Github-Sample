@@ -4,6 +4,8 @@ import net.franguti.githubsampleapp.entities.Repository;
 
 public interface RepositoryListView {
 
+  void showSearchTutorial();
+  void hideSearchTutorial();
   void showSearchLanguageField();
   void hideSearchLanguageField();
   void showRepositories(Repository[] repositories);

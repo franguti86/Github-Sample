@@ -1,5 +1,6 @@
 package net.franguti.githubsampleapp.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,9 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -35,6 +38,8 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
   @Bind(R.id.repository_recyclerview) RecyclerView repositoryRecyclerView;
   @Bind(R.id.search_edittext) EditText searchLanguageEdittext;
   @Bind(R.id.progress_bar_view) ProgressBarView progressBarView;
+  @Bind(R.id.tutorial_search_textview) TextView tutorialSearchTextView;
+  @Bind(R.id.tutorial_imageview) ImageView tutorialSearchImageView;
 
   @Override protected int getFragmentLayout() {
     return R.layout.fragment_repository_list;
@@ -56,7 +61,8 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
 
   private void initialiseToolbar() {
     ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.repository_list_search_hint));
+    ((AppCompatActivity) getActivity()).getSupportActionBar()
+        .setTitle(getString(R.string.repository_list_toolbar_title));
   }
 
   private void initialiseFont() {
@@ -77,7 +83,8 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
       @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
           String language = v.getText().toString();
-          ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(language);
+          ((AppCompatActivity) getActivity()).getSupportActionBar()
+              .setTitle(getString(R.string.repository_list_toolbar_language_title, language));
           presenter.performSearchRepository(language);
           return true;
         }
@@ -98,6 +105,16 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
     presenter.performShowSearchField();
   }
 
+  @Override public void showSearchTutorial() {
+    tutorialSearchTextView.setVisibility(View.VISIBLE);
+    tutorialSearchImageView.setVisibility(View.VISIBLE);
+  }
+
+  @Override public void hideSearchTutorial() {
+    tutorialSearchTextView.setVisibility(View.GONE);
+    tutorialSearchImageView.setVisibility(View.GONE);
+  }
+
   @Override public void showProgressBar() {
     progressBarView.setVisibility(View.VISIBLE);
     progressBarView.start();
@@ -111,6 +128,9 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
   @Override public void showSearchLanguageField() {
     searchLanguageEdittext.setVisibility(View.VISIBLE);
     searchLanguageEdittext.requestFocus();
+    InputMethodManager imm =
+        (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.showSoftInput(searchLanguageEdittext, InputMethodManager.SHOW_IMPLICIT);
   }
 
   @Override public void hideSearchLanguageField() {
@@ -119,6 +139,9 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
   }
 
   @Override public void showSearchError() {
+    ((AppCompatActivity) getActivity()).getSupportActionBar()
+        .setTitle(getString(R.string.repository_list_toolbar_language_error_title,
+            searchLanguageEdittext.getText().toString()));
     Snackbar.make(getView(), getString(R.string.repository_list_error_search), Snackbar.LENGTH_LONG)
         .show();
   }
