@@ -15,6 +15,7 @@ public class ContributorItemView extends CardView {
 
   @Bind(R.id.avatar_circleimageview) CircleImageView avatarCircleImageView;
   @Bind(R.id.owner_name_textview) TextView ownerNameTextView;
+  @Bind(R.id.contributions_textview) TextView contributionsTextView;
 
   public ContributorItemView(Context context) {
     super(context);
@@ -38,5 +39,6 @@ public class ContributorItemView extends CardView {
         .load(contributor.getAvatarUrl())
         .into(avatarCircleImageView);
     ownerNameTextView.setText(contributor.getLogin());
+    contributionsTextView.setText(String.valueOf(contributor.getContributions()));
   }
 }

@@ -39,9 +39,9 @@
           android:textAppearance="?attr/textAppearanceListItem"
           android:layout_marginLeft="15dp"
           android:layout_marginStart="15dp"
-          android:textSize="20sp"
+          android:textSize="18sp"
           tools:name="Owner name"
-          android:textColor="@android:color/black"/>
+          android:textColor="@color/palette_grey_darker"/>
 
       <TextView
           android:id="@+id/state_textview"
@@ -51,7 +51,7 @@
           android:layout_marginLeft="10dp"
           android:layout_gravity="center"
           android:layout_marginStart="10dp"
-          android:textSize="20sp"
+          android:textSize="18sp"
           tools:name="state"
           android:background="@drawable/box_background"
           android:textColor="@android:color/white"/>
@@ -63,10 +63,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_marginTop="10dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:name="Issue title"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/palette_grey_darker"/>
 
     <TextView
         android:id="@+id/issue_description_textview"
@@ -76,7 +76,7 @@
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         tools:name="Issue description"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/palette_grey_darker"/>
   </LinearLayout>
 
 </net.franguti.githubsampleapp.ui.views.IssueItemView>

@@ -12,16 +12,18 @@ public class Repository {
   @SerializedName("description") String description;
   @SerializedName("html_url") String htmlUrl;
   @SerializedName("owner") User owner;
+  @SerializedName("stargazers_count") int stars;
 
   public Repository() { }
 
-  public Repository(long id, String name, String fullName, String description, String htmlUrl, User owner) {
+  public Repository(long id, String name, String fullName, String description, String htmlUrl, User owner, int stars) {
     this.id = id;
     this.name = name;
     this.fullName = fullName;
     this.description = description;
     this.htmlUrl = htmlUrl;
     this.owner = owner;
+    this.stars = stars;
   }
 
   public long getId() {
@@ -70,5 +72,13 @@ public class Repository {
 
   public void setOwner(User owner) {
     this.owner = owner;
+  }
+
+  public int getStars() {
+    return stars;
+  }
+
+  public void setStars(int stars) {
+    this.stars = stars;
   }
 }

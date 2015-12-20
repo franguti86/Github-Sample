@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -134,6 +136,8 @@ public class RepositoryDetailActivity extends BaseActivity implements Repository
       contributorItemView.bindData(contributor);
       contributorsContainer.addView(contributorItemView);
     }
+    Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation);
+    contributorsContainer.startAnimation(animation);
   }
 
   @Override public void showIssues(Issue[] issues) {
@@ -144,6 +148,8 @@ public class RepositoryDetailActivity extends BaseActivity implements Repository
       issueItemView.bindData(issue);
       issuesContainer.addView(issueItemView);
     }
+    Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation);
+    issuesContainer.startAnimation(animation);
   }
 
     @Override public void showIssuesError() {

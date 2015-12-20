@@ -31,6 +31,10 @@ public class RepositoryListPresenter implements SearchRepositoriesInteractor.Cal
     if (!view.isSearchLanguageFieldDisplayed()) {
       view.showSearchLanguageField();
     } else {
+      String language = view.getSearchLanguageFieldString();
+      if (language.length() > 0) {
+        performSearchRepository(language);
+      }
       view.hideSearchLanguageField();
     }
   }

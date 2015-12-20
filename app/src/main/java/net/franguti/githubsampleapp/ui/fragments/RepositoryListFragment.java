@@ -61,8 +61,14 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
 
   private void initialiseToolbar() {
     ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-    ((AppCompatActivity) getActivity()).getSupportActionBar()
-        .setTitle(getString(R.string.repository_list_toolbar_title));
+    setToolbarTitle(getString(R.string.repository_list_toolbar_title));
+  }
+
+  private void setToolbarTitle(String title) {
+    AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+    if (appCompatActivity != null && appCompatActivity.getSupportActionBar() != null) {
+      appCompatActivity.getSupportActionBar().setTitle(title);
+    }
   }
 
   private void initialiseFont() {
@@ -83,8 +89,7 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
       @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
           String language = v.getText().toString();
-          ((AppCompatActivity) getActivity()).getSupportActionBar()
-              .setTitle(getString(R.string.repository_list_toolbar_language_title, language));
+          setToolbarTitle(getString(R.string.repository_list_toolbar_language_title, language));
           presenter.performSearchRepository(language);
           return true;
         }
@@ -139,9 +144,8 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
   }
 
   @Override public void showSearchError() {
-    ((AppCompatActivity) getActivity()).getSupportActionBar()
-        .setTitle(getString(R.string.repository_list_toolbar_language_error_title,
-            searchLanguageEdittext.getText().toString()));
+    setToolbarTitle(getString(R.string.repository_list_toolbar_language_error_title,
+        searchLanguageEdittext.getText().toString()));
     Snackbar.make(getView(), getString(R.string.repository_list_error_search), Snackbar.LENGTH_LONG)
         .show();
   }
@@ -152,5 +156,9 @@ public class RepositoryListFragment extends BaseFragment implements RepositoryLi
 
   @Override public void onRepositorySelected(Repository repository) {
     presenter.performShowRepositoryDetail(repository);
+  }
+
+  @Override public String getSearchLanguageFieldString() {
+    return searchLanguageEdittext.getText().toString();
   }
 }

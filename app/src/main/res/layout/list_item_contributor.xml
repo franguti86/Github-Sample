@@ -26,13 +26,35 @@
 
     <TextView
         android:id="@+id/owner_name_textview"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_marginLeft="15dp"
-        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/palette_grey_darker"
         tools:name="Owner name"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/list_item_contributors_contentdescription"
+        android:src="@drawable/ic_contributors"/>
+
+    <TextView
+        android:id="@+id/contributions_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/palette_grey_darker"
+        tools:text="contributors"/>
   </LinearLayout>
 
 </net.franguti.githubsampleapp.ui.views.ContributorItemView>

@@ -63,6 +63,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
 
     @Bind(R.id.item_container) View container;
     @Bind(R.id.repository_name_textview) TextView repositoryNameTextView;
+    @Bind(R.id.starts_textview) TextView starsTextView;
 
     public RepositoryViewHolder(View itemView) {
       super(itemView);
@@ -72,6 +73,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
     public void bindData(Repository repository) {
       repositoryNameTextView.setText(repository.getName());
       container.setTag(repository);
+      starsTextView.setText(String.valueOf(repository.getStars()));
     }
 
   }

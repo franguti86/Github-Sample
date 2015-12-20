@@ -44,8 +44,8 @@ public class ContributorsInteractorImpl implements ContributorsInteractor {
   static class TopContributorsComparator implements Comparator<User> {
 
     @Override public int compare(User lhs, User rhs) {
-      return lhs.getContributions() < rhs.getContributions() ? -1
-          : (lhs.getContributions() == rhs.getContributions() ? 0 : 1);
+      return lhs.getContributions() < rhs.getContributions() ? 1
+          : (lhs.getContributions() == rhs.getContributions() ? 0 : -1);
     }
   }
 }

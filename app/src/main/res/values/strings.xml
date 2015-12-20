@@ -10,4 +10,6 @@
   <string name="repository_detail_contributors_title">Contributors</string>
   <string name="repository_detail_issues_title">Issues</string>
   <string name="repository_list_star_search">Try to search a language</string>
+  <string name="list_item_repository_stars_contentdescription">stars</string>
+  <string name="list_item_contributors_contentdescription">contributors</string>
 </resources>

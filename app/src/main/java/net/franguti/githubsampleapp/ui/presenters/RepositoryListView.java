@@ -13,4 +13,5 @@ public interface RepositoryListView {
   void hideProgressBar();
   void showSearchError();
   boolean isSearchLanguageFieldDisplayed();
+  String getSearchLanguageFieldString();
 }
