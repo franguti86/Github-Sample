@@ -1,0 +1,35 @@
+apply plugin: 'jacoco'
+
+task jacocoReport(type: JacocoReport) {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports after running tests.'
+
+    reports {
+        xml {
+            enabled = true
+            destination "${project.buildDir}/reports/jacoco/jacoco.xml"
+        }
+        html {
+            enabled = true
+            destination "${project.buildDir}/reports/jacoco/jacoco.html"
+        }
+    }
+
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes/envDev/debug',
+            excludes: [
+                    '**/R*.class',
+                    '**/BuildConfig*',
+                    'android/support**',
+                    '**/*$*.class',
+                    '**/*$*.java'
+            ]
+    )
+
+    sourceDirectories = files('src/main/java')
+    executionData = project.files('build/jacoco/testEnvDevDebugUnitTest.exec')
+}
+
+jacoco {
+    toolVersion '0.7.4.201502262128'
+}

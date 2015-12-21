@@ -1,0 +1,15 @@
+
+ext.cleanArtifactsFolder = { variant ->
+    variant.assemble.doLast {
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.contains("unsigned")) {
+                outputFile.delete()
+            }
+            def aligmentFile = output.packageApplication.outputFile;
+            if (aligmentFile != null && aligmentFile.name.contains("unaligned")) {
+                aligmentFile.delete()
+            }
+        }
+    }
+}
