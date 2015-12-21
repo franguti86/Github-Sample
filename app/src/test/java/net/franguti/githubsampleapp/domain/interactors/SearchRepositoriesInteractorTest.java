@@ -5,7 +5,6 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import dagger.ObjectGraph;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
 import net.franguti.githubsampleapp.FileUtils;
 import net.franguti.githubsampleapp.domain.TestDomainModule;
@@ -15,6 +14,9 @@ import org.junit.Test;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class SearchRepositoriesInteractorTest {
 
@@ -38,25 +40,31 @@ public class SearchRepositoriesInteractorTest {
     assertThat("Assertion error reading file!", searchJson != null && searchJson.length() > 0);
   }
 
-  @Test(timeout = 100) public void givenARightJson_WhenSearchRepositories_ThenShouldReturnSearchResult() throws IOException {
+  @Test public void givenARightJson_WhenSearchRepositories_ThenShouldReturnSearchResult() throws IOException {
     File file = FileUtils.getFileFromPath(this, "./search_repositories.json");
     String searchJson = FileUtils.readFileAsString(file);
     mockWebServer.enqueue(new MockResponse().setBody(searchJson));
 
-    final AtomicBoolean testDone = new AtomicBoolean(false);
     searchRepositoriesInteractor.searchPopularRepositoriesByLanguage("java",
         new SearchRepositoriesInteractor.Callback() {
           @Override public void onSearchRepositoriesSuccess(SearchResult searchResult) {
             assertThat("Assertion fail, no search result!",
                 searchResult.getRepositories().length > 0);
-            testDone.set(true);
           }
 
           @Override public void onSearchRepositoriesError() {
             fail("Fail on searching!");
           }
         });
-    while(!testDone.get());
+  }
+
+  @Test public void givenAWrongJson_WhenSearchRepositories_ThenShouldCallError() throws IOException {
+    mockWebServer.enqueue(new MockResponse().setBody("[,"));
+
+    SearchRepositoriesInteractor.Callback mockCallback = mock(SearchRepositoriesInteractor.Callback.class);
+    searchRepositoriesInteractor.searchPopularRepositoriesByLanguage("java", mockCallback);
+    verify(mockCallback).onSearchRepositoriesError();
+    verifyNoMoreInteractions(mockCallback);
   }
 
 }

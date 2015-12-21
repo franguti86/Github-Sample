@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class ContributorsInteractorTest {
 
@@ -39,7 +42,7 @@ public class ContributorsInteractorTest {
     assertThat("Assertion error reading file!", searchJson != null && searchJson.length() > 0);
   }
 
-  @Test(timeout = 100) public void givenARightJson_WhenRetrieveContributors_ThenShouldReturnContributors() throws IOException {
+  @Test public void givenARightJson_WhenRetrieveContributors_ThenShouldReturnContributors() throws IOException {
     File file = FileUtils.getFileFromPath(this, "./contributors.json");
     String searchJson = FileUtils.readFileAsString(file);
     mockWebServer.enqueue(new MockResponse().setBody(searchJson));
@@ -49,20 +52,30 @@ public class ContributorsInteractorTest {
     Repository repository = new Repository();
     repository.setName("test");
     repository.setOwner(owner);
-    final AtomicBoolean testDone = new AtomicBoolean(false);
     contributorsInteractor.retrieveThreeTopContributorsByRepository(repository,
         new ContributorsInteractor.Callback() {
           @Override public void onRetrieveContributorsSuccess(User[] contributors) {
-            assertThat("Assertion fail, no contributors result!",
-                contributors.length > 0);
-            testDone.set(true);
+            assertThat("Assertion fail, no contributors result!", contributors.length > 0);
           }
 
           @Override public void onRetrieveContributorsError() {
             fail("Fail retrieving contributors!");
           }
         });
-    while(!testDone.get());
+  }
+
+  @Test public void givenAWrongJson_WhenRetrieveContributors_ThenShouldCallError() throws IOException {
+    mockWebServer.enqueue(new MockResponse().setBody("[,"));
+
+    User owner = new User();
+    owner.setLogin("owner");
+    Repository repository = new Repository();
+    repository.setName("test");
+    repository.setOwner(owner);
+    ContributorsInteractor.Callback mockCallback = mock(ContributorsInteractor.Callback.class);
+    contributorsInteractor.retrieveThreeTopContributorsByRepository(repository, mockCallback);
+    verify(mockCallback).onRetrieveContributorsError();
+    verifyNoMoreInteractions(mockCallback);
   }
 
 }
