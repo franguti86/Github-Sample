@@ -18,7 +18,7 @@
 
 I decided to apply [The Clean Architecture] from Robert Martin (Uncle Bob) using MVP for the UI layer. The reason to use this kind of architecture is to have an architecture independent to the UI, independent of the framework, and very important, testable. The domain and model layer can be easily changed, they are independent to the framework. To improve the architecture and to make easier to test the app, I used dependency injection (Dagger from Square Open Source) in every single layer. To fetch the data from the network and perform it on background I used Retrofit. The app is responsive for all sizes supporting screen densities from MDPI to XXXHDPI (assets ready for those resolutions, for the rest it will be scaled) although there is no tablet version. To make a tablet version we can have the RepositoryListFragment as a frame on the left hand side for instance.
 
-The project was configured to create a build process with different environments; Dev, Stage and Prod. For the development, I integrated the following libraries:
+The project was configured to create a build process with different environments (Dev, Stage and Prod) and ready to be integrated with a CI. For the development, I used the following libraries:
 
   - **Dependency injection:** Dagger from Square Open Source.
   - **View injection:** ButterKnife from Square Open Source.
