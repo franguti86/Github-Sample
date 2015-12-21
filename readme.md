@@ -16,14 +16,18 @@
 
 ## Design decision
 
-I decided to apply [The Clean Architecture] from Robert Martin (Uncle Bob) using MVP for the UI layer. The reason to use this kind of architecture is to have an architecture independent to the UI, independent of the framework, and very important, testable. The domain and model layer can be easily changed, they are independent to the framework. To improve the architecture and to make easier to test the app, I used dependency injection (Dagger from Square Open Source) in every single layer. A event bus system is used to notify the result of the execution of a use case because of the lifecycle of the view on Android; Activities, Fragments, etc.
+I decided to apply [The Clean Architecture] from Robert Martin (Uncle Bob) using MVP for the UI layer. The reason to use this kind of architecture is to have an architecture independent to the UI, independent of the framework, and very important, testable. The domain and model layer can be easily changed, they are independent to the framework. To improve the architecture and to make easier to test the app, I used dependency injection (Dagger from Square Open Source) in every single layer. To fetch the data from the network and perform it on background I used Retrofit. The app is responsive for all sizes supporting screen densities from MDPI to XXXHDPI (assets ready for those resolutions, for the rest it will be scaled) although there is no tablet version. To make a tablet version we can have the RepositoryListFragment as a frame on the left hand side for instance.
 
-The project was configured to create a build process with different environments; Dev, Stage and Prod. Mostly I used the most important libraries for Android, completely necessary for a robust and reliable architecture.
+The project was configured to create a build process with different environments; Dev, Stage and Prod. For the development, I integrated the following libraries:
 
   - **Dependency injection:** Dagger from Square Open Source.
   - **View injection:** ButterKnife from Square Open Source.
-  - **Otto bus event:** Bus event from Square Open Source.
   - **Retrofit with OkHttp:** Network communication from Square Open Source.
-  - **Android Support libraries v4 and AppCompact** from the framework.
+  - **Android Support design, v7 AppCompact and CardView:** Libraries for Material Design and support.
+  - **Parceler:** To pass data from activities using Parcelable objects.
+  - **Picasso:** Download and cache image system.
+  - **CircleImageView:** To round images.
+  - **MockWebServer:** To mock Retrofit network layer.
+  - **Junit and Mockito:** For unit test.
 
 [The Clean Architecture]:http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
