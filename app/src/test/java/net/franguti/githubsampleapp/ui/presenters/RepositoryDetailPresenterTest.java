@@ -57,7 +57,7 @@ public class RepositoryDetailPresenterTest {
   }
 
   @Test
-  public void givenAPresenter_WhenStart_ThenShouldRetrieveContributors() {
+  public void givenAPresenter_WhenStart_ThenShouldCallContributorsInteractor() {
     presenter.setView(mockView);
     presenter.start(any(Repository.class));
     verify(mockContributorsInteractor).retrieveThreeTopContributorsByRepository(
@@ -65,7 +65,7 @@ public class RepositoryDetailPresenterTest {
   }
 
   @Test
-  public void givenAPresenter_WhenStart_ThenShouldRetrieveIssues() {
+  public void givenAPresenter_WhenStart_ThenShouldCallIssuesInteractor() {
     presenter.setView(mockView);
     presenter.start(any(Repository.class));
     verify(mockIssuesItentactor).retrieveThreeNewestIssuesByRepository(any(Repository.class),
