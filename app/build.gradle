@@ -14,6 +14,10 @@ apply from: '../buildsystem/findbugs.gradle'
 apply from: '../buildsystem/checkstyle.gradle'
 apply from: '../buildsystem/utils.gradle'
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 2
+
 android {
   compileSdkVersion 23
   buildToolsVersion "23.0.2"
@@ -22,8 +26,8 @@ android {
     applicationId "net.franguti.githubsampleapp"
     minSdkVersion 15
     targetSdkVersion 23
-    versionCode System.getenv("BUILD_NUMBER") as Integer ?: 1
-    versionName "1.0.1." + (System.getenv("BUILD_NUMBER") as String ?: "0")
+    versionCode versionMajor * 100000 + versionMinor * 10000 + versionPatch * 1000 + (System.getenv("BUILD_NUMBER") as Integer ?: 1)
+    versionName "${versionMajor}.${versionMinor}.${versionPatch}." + (System.getenv("BUILD_NUMBER") as String ?: "0")
     project.ext.set("archivesBaseName", "GithubSampleApp-" + versionName + "-" + versionCode);
     android.applicationVariants.all {
       variant -> cleanArtifactsFolder(variant)
@@ -53,28 +57,33 @@ android {
       signingConfig signingConfigs.debug
       applicationIdSuffix '.debug'
       versionNameSuffix '-DEBUG'
+      buildConfigField "boolean", "LOG_HTTP_REQUESTS", "true"
     }
 
     release {
       signingConfig signingConfigs.release
       debuggable false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      buildConfigField "boolean", "LOG_HTTP_REQUESTS", "true"
     }
   }
 
   productFlavors {
 
     envDev {
+      minSdkVersion 21
       applicationId "net.franguti.githubsampleapp.dev"
       resValue "string", "app_name", "Github Sample Dev"
     }
 
     envStage {
+      minSdkVersion 15
       applicationId "net.franguti.githubsampleapp.stage"
       resValue "string", "app_name", "Github Sample Stage"
     }
 
     envProd {
+      minSdkVersion 15
       applicationId "net.franguti.githubsampleapp"
       resValue "string", "app_name", "Github Sample"
     }
@@ -82,6 +91,14 @@ android {
 
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  testOptions.unitTests.all {
+    testLogging {
+      events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+      outputs.upToDateWhen { false }
+      showStandardStreams = true
+    }
   }
 
   testOptions {
